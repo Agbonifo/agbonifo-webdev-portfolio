@@ -78,28 +78,7 @@ function setTheme(theme) {
   }
 };
 
-document.addEventListener("DOMContentLoaded", function () {
-  const contactForm = document.getElementById("contactForm");
 
-  contactForm.addEventListener("submit", async function (event) {
-      event.preventDefault();
-
-      // Submit the form data to MongoDB
-      const formData = new FormData(contactForm);
-      const response = await fetch("/submit", {
-          method: "POST",
-          body: formData,
-      });
-
-      if (response.ok) {
-          // Reset the form if the submission is successful
-          contactForm.reset();
-      } else {
-          // Handle the case where the submission fails
-          console.error("Form submission failed");
-      }
-  });
-});
 // Function to auto cap after ".!?"
 function autoCapitalize(inputId) {
   const input = document.getElementById(inputId);
