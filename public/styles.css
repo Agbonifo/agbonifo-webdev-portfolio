@@ -284,6 +284,24 @@ span {
     text-align: justify;
 }
 
+.about-content #text ul {
+    list-style-position: inside;
+}
+
+.about-content #text li {
+    display: flex;
+    align-items: flex-start;
+    position: relative;
+    padding-left: 1.5em;
+}
+
+.about-content #text li::before {
+    content: '•'; 
+    position: absolute;
+    left: 0;
+    margin-top: 0.2em;
+}
+
 .about-content #text a span {
     padding: 0.5rem;
     color: var(--text-color);

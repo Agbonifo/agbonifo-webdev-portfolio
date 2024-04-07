@@ -8,8 +8,8 @@ menuIcon.onclick = () => {
 };
 
 // scroll sections active link
-let sections = document.querySelectorAll("section");
-let navLinks = document.querySelectorAll("header nav a");
+const sections = document.querySelectorAll("section");
+const navLinks = document.querySelectorAll("header nav a");
 
 window.onscroll = () => {
   sections.forEach((sec) => {
@@ -28,7 +28,7 @@ window.onscroll = () => {
     }
   });
   // sticky header
-  let header = document.querySelector("header");
+  const header = document.querySelector("header");
   header.classList.toggle("sticky", window.scrollY > 100);
 
   // remove toggle icon and navbar when click navbar links (scroll)
@@ -37,24 +37,7 @@ window.onscroll = () => {
 };
 
 
-// animation on scroll
-document.addEventListener("DOMContentLoaded", function() {
-  // Global configuration for ScrollReveal
-  ScrollReveal({
-      reset: true,
-      distance: "80px",
-      duration: 2000,
-      delay: 200,
-  });
-
-  // ScrollReveal configurations for individual elements
-  ScrollReveal().reveal(".home-content, .heading", { origin: "top" });
-  ScrollReveal().reveal(".home-img, .services-container, .portfolio-box, .contact form", { origin: "bottom" });
-  ScrollReveal().reveal(".home-content h1, .about-img", { origin: "left" });
-  ScrollReveal().reveal(".home-content p, .portfolio p, .about-content", { origin: "right" });
-});
-
-var typed = new Typed(".multiple-text", {
+new Typed(".multiple-text", {
   strings: ["Full-Stack Developer", "&", "Data Analyst"],
   typeSpeed: 100,
   backSpeed: 100,
@@ -80,15 +63,12 @@ if (userPrefersDark) {
 } else {
   setTheme("light");
 }
-
 const themeToggleBtn = document.getElementById("theme-toggle-btn");
 themeToggleBtn.addEventListener("click", toggleTheme);
-
 function toggleTheme() {
   const body = document.body;
   body.classList.toggle("light-mode");
 }
-
 function setTheme(theme) {
   const body = document.body;
   if (theme === "dark") {
@@ -96,38 +76,77 @@ function setTheme(theme) {
   } else {
     body.classList.remove("dark-mode");
   }
-}
+};
 
+document.addEventListener("DOMContentLoaded", function () {
+  const contactForm = document.getElementById("contactForm");
 
+  contactForm.addEventListener("submit", async function (event) {
+      event.preventDefault();
+
+      // Submit the form data to MongoDB
+      const formData = new FormData(contactForm);
+      const response = await fetch("/submit", {
+          method: "POST",
+          body: formData,
+      });
+
+      if (response.ok) {
+          // Reset the form if the submission is successful
+          contactForm.reset();
+      } else {
+          // Handle the case where the submission fails
+          console.error("Form submission failed");
+      }
+  });
+});
 // Function to auto cap after ".!?"
 function autoCapitalize(inputId) {
-  var input = document.getElementById(inputId);
-  var value = input.value;
-
+  const input = document.getElementById(inputId);
+  const value = input.value;
   input.value = value.replace(/(?<=(?:^|[.?!])\s*)[a-z]/g, function (match) {
     return match.toUpperCase();
   });
 }
 
 
+// animation on scroll
+document.addEventListener("DOMContentLoaded", function () {
+  // Global configuration for ScrollReveal
+  ScrollReveal({
+    reset: true,
+    distance: "80px",
+    duration: 2000,
+    delay: 200,
+  });
+
+  // ScrollReveal configurations for individual elements
+  ScrollReveal().reveal(".home-content, .heading", { origin: "top" });
+  ScrollReveal().reveal(
+    ".home-img, .services-container, .portfolio-box, .contact form",
+    { origin: "bottom" }
+  );
+  ScrollReveal().reveal(".home-content h1, .about-img", { origin: "left" });
+  ScrollReveal().reveal(".home-content p, .portfolio p, .about-content", {
+    origin: "right",
+  });
+});
+
 
 document.addEventListener("DOMContentLoaded", function () {
   const boxes = document.querySelectorAll(".services-box");
-
   boxes.forEach(function (box) {
     const textElement = box.querySelector(".text");
     const readMoreBtn = box.querySelector(".read-more-btn");
-
     const fullText = textElement.innerText;
     const shortText =
       fullText.substring(0, 100) + (fullText.length > 100 ? "..." : "");
 
     textElement.innerText = shortText;
-
     if (fullText.length > 100) {
       readMoreBtn.addEventListener("click", function () {
         if (textElement.innerText === shortText) {
-          textElement.innerText = fullText; 
+          textElement.innerText = fullText;
           readMoreBtn.textContent = "Read less";
         } else {
           textElement.innerText = shortText;
@@ -140,29 +159,26 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 });
 
-
-
 document.addEventListener("DOMContentLoaded", function () {
   const textElement = document.getElementById("text");
-  const readMoreBtn = document.getElementById("read-more-btn");
-
-  const fullText = textElement.innerHTML;
+  const readMoreButton = document.getElementById("read-more-btn");
+  const fullText = textElement.innerHTML.trim();
   const shortText =
-    fullText.substring(0, 300) + (fullText.length > 300 ? "..." : "");
+    fullText.length > 300 ? fullText.substring(0, 300) + "..." : fullText;
+  let isFullTextShown = fullText.length <= 300;
 
-  textElement.innerHTML = shortText;
+  textElement.innerHTML = isFullTextShown ? fullText : shortText;
+  readMoreButton.textContent = isFullTextShown ? "Read less" : "Read more";
 
-  if (fullText.length > 300) {
-    readMoreBtn.addEventListener("click", function () {
-      if (textElement.innerHTML === shortText) {
-        textElement.innerHTML = fullText; 
-        readMoreBtn.textContent = "Read less";
-      } else {
-        textElement.innerHTML = shortText; 
-        readMoreBtn.textContent = "Read more";
-      }
-    });
-  } else {
-    readMoreBtn.style.display = "none"; 
-  }
+  readMoreButton.addEventListener("click", function () {
+    if (isFullTextShown) {
+      textElement.innerHTML = shortText;
+      readMoreButton.textContent = "Read more";
+    } else {
+      textElement.innerHTML = fullText;
+      readMoreButton.textContent = "Read less";
+    }
+    isFullTextShown = !isFullTextShown;
+  });
 });
+
