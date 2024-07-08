@@ -11,9 +11,13 @@
     <script src="https://unpkg.com/scrollreveal"></script>
     <script src="https://unpkg.com/typed.js@2.0.16/dist/typed.umd.js"></script>
     <script src="https://kit.fontawesome.com/5094c540e9.js" crossorigin="anonymous"></script>
+    <script src="https://www.google.com/recaptcha/api.js"></script>
+
+    <!-- <script src="https://www.google.com/recaptcha/api.js" async defer></script> -->
 
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <link rel="stylesheet" href="/styles.css">
+
 </head>
 
 <body>
@@ -277,7 +281,7 @@
 
 
     <!-- contact section design -->
-    <section class="contact" id="contact">
+    <!-- <section class="contact" id="contact">
         <h2 class="heading">Get In <span>Touch!</span></h2>
         <form action="/" method="POST">
             <div class="input-box">
@@ -294,7 +298,28 @@
                 oninput="autoCapitalize('myTextarea')" required></textarea>
             <input type="submit" value="Send a Message" class="btn">
         </form>
-    </section>
+    </section> -->
+
+    <section class="contact" id="contact">
+        <h2 class="heading">Get In <span>Touch!</span></h2>
+        <form action="/" method="POST" id="contactForm">
+          <div class="input-box">
+            <input type="text" name="fullName" placeholder="Full Name" id="myInput1"
+                   oninput="autoCapitalize('myInput1')" required>
+            <input type="email" name="email" placeholder="email@example.com" required>
+          </div>
+          <div class="input-box">
+            <input type="number" name="phoneNo" placeholder="Mobile Number" required>
+            <input type="text" name="subject" placeholder="Subject" id="myInput2"
+                   oninput="autoCapitalize('myInput2')">
+          </div>
+          <textarea name="message" cols="30" rows="10" placeholder="Your Message" id="myTextarea"
+                    oninput="autoCapitalize('myTextarea')" required></textarea>
+          <div class="g-recaptcha" data-sitekey="your-site-key"></div>
+          <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+          <input type="submit" value="Send a Message" class="btn">
+        </form>
+      </section>
 
 
     <!-- footer section design -->
