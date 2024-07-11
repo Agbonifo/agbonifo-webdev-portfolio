@@ -88,14 +88,6 @@ function autoCapitalize(inputId) {
   });
 }
 
-// Adding a CAPTCHA verification
-document.getElementById('contactForm').addEventListener('submit', function(event) {
-  if (!grecaptcha.getResponse()) {
-      event.preventDefault();
-      alert('Please complete the CAPTCHA.');
-  }
-});
-
 
 // animation on scroll
 document.addEventListener("DOMContentLoaded", function () {
